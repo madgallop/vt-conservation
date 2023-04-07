@@ -22,16 +22,25 @@ wbt = WhiteboxTools()
 #  Working directories
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-out = "/Volumes/drosera/data/midd/wb_layers/"    # path points to folder for storing good outputs
-temp = "/Volumes/drosera/data/midd/wb_temp/"     # path points to a folder for storing intermediary outputs
+# Define personal storage root.
+# This is the path where you will store inputs and outputs from this workflow.
+# For example, my root points to the directory (folder) of s23 in GEOG0310 
+# on an external drive named drosera. 
+
+root = "/Volumes/drosera/GEOG0310/s23"
+
+# Set up separate directories to store temporary and keeper outputs. 
+
+temp = root+"/wb_temp/"     
+keep = root+"/wb_layers/"   
 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Required datasets:
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# Imported datasets
+# Point to directory where you hold input data. 
 
-dem = "/Volumes/drosera/data/midd/ee/DEM_1m.tif"   # path points to data inputs
+dem =root+"/ee/DEM_10m.tif"  
 
 # ------------------------------------------------------------------------------
 # IMPLEMENT
@@ -59,15 +68,20 @@ wbt.geomorphons(
     forms=True      
     )
 
-# Reclassify landforms to isolate valley bottoms. 
+# Threshold landform class to isolate valley bottoms. 
 
  wbt.greater_than(
   input1 = temp+"_02_landforms.tif", 
   input2 = 9,
-  output = out+"valley_bottoms.tif",
+  output = keep+"valley_bottoms.tif",
   incl_equals=True
 )
 
-#  # reduce noise by taking majority class within 50 feet
+ # Reduce noise by taking majority class within neighborhood.
 
-#     wbt.majority_filter(i = "_01.tif", output = data_repo+"_lowlands.tif",filterx=11,filtery=11)
+  wbt.majority_filter(
+  i = "valley_bottoms.tif",
+  output = keep+"valley_bottoms_majority.tif",
+  filterx=11,
+  filtery=11
+  )
