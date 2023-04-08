@@ -6,11 +6,12 @@ A collection of geographic data workflows for teaching and doing conservation pl
 
 To access data called by the scripts:
 
-1. Create three directories in a root directory on a drive as shown below. The three directories should be named:
+1. Create four sub-directories in a root directory on a drive as shown below. The three directories should be named:
 
     * inputs
     * keeps
-    * temps
+    * projects 
+    * temps 
 
 ![directory](assets/directory.png) 
 
