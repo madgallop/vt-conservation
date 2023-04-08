@@ -13,7 +13,7 @@ To access data called by the scripts:
     * projects 
     * temps 
 
-![directory](assets/directory.png) 
+![directory](assets/directory_.png) 
 
 2. Download the required datasets from [here][data] and place them in the inputs folder.
 
