@@ -7,6 +7,7 @@ A collection of geographic data workflows for teaching and doing conservation pl
 To access data called by the scripts:
 
 1. Create three directories in a root directory on a drive as shown below. The three directories should be named:
+
     * inputs
     * keeps
     * temps
@@ -27,7 +28,7 @@ The practice workflows are python scripts that implement [WhiteboxTools Open Cor
 
 | Script    | Description   |
 | :--       | :---          |
-| [_01_simple_landforms.py][01] | Classify landforms from a 10m DEM with geomorphons. | 
+| [_01_simple_landforms.py][01] | Classify landforms with geomorphons. | 
 | [_02_valley_bottoms.py][02]   | Classify landforms with geomorphons, threshold to isolate valley bottoms, smooth with neighborhood majority filter. | 
 
 ### Contact 
