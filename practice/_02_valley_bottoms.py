@@ -66,7 +66,7 @@ wbt.greater_than(
   incl_equals=True
 )
 
-# Remove noise by taking majority class within 50 feet (neighborhood filter).
+# Remove noise by taking majority class within neighborhood kernel filter.
 
 wbt.majority_filter(
     i = temps+"_0202_valley_bottoms.tif", 
