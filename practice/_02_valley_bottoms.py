@@ -1,7 +1,6 @@
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  name:        _02_valley_bottoms.py
-#  purpose:     Resample a high resolution DEM, classify landforms with geomorphons, 
-#               and isolate valley bottoms.
+#  purpose:     Classify landforms with geomorphons and isolate valley bottoms.
 #
 #  author:      Jeff Howarth
 #  update:      04/07/2023
@@ -31,8 +30,8 @@ root = "/Volumes/drosera/GEOG0310/s23"
 
 # Set up separate directories to store temporary and keeper outputs. 
 
-temp = root+"/wb_temp/"     
-keep = root+"/wb_layers/"   
+temps = root+"/temps/"     
+keeps = root+"/keeps/"   
 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Required datasets:
@@ -40,48 +39,38 @@ keep = root+"/wb_layers/"
 
 # Point to directory where you hold input data. 
 
-dem =root+"/ee/DEM_10m.tif"  
+dem =root+"/inputs/DEM_10m.tif"  
 
 # ------------------------------------------------------------------------------
 # IMPLEMENT
 # ------------------------------------------------------------------------------
-
-# Resample high resolution DEM to decrease resolution.
-
-wbt.resample(
- inputs = dem, 
- output = temp+"_01_resample.tif", 
- cell_size = 3, 
-#  base=dem, 
- method = "cc"
- )
 
 # Classify landforms from DEM with geomorphons. 
 # See WBT manual for parameter definitions.
 
 wbt.geomorphons(
     dem = dem, 
-    output = temp+"_02_landforms.tif", 
-    search=50, 
-    threshold=0.0, 
-    fdist=0, 
+    output = temps+"_0201_landforms.tif", 
+    search=100,              # Adjust search distance based on site terrain and data resolution.
+    threshold=0.0,          
+    fdist=0,               
     forms=True      
     )
 
 # Threshold landform class to isolate valley bottoms. 
-
- wbt.greater_than(
-  input1 = temp+"_02_landforms.tif", 
+ 
+wbt.greater_than(
+  input1 = temps+"_0201_landforms.tif", 
   input2 = 9,
-  output = keep+"valley_bottoms.tif",
+  output = temps+"_0202_valley_bottoms.tif",
   incl_equals=True
 )
 
- # Reduce noise by taking majority class within neighborhood.
+# Remove noise by taking majority class within 50 feet (neighborhood filter).
 
-  wbt.majority_filter(
-  i = "valley_bottoms.tif",
-  output = keep+"valley_bottoms_majority.tif",
-  filterx=11,
-  filtery=11
+wbt.majority_filter(
+    i = temps+"_0202_valley_bottoms.tif", 
+    output = keeps+"_0203_valley_bottoms_smoothed.tif",
+    filterx=5,
+    filtery=5
   )

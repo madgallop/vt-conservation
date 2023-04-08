@@ -30,8 +30,8 @@ root = "/Volumes/drosera/GEOG0310/s23"
 
 # Set up separate directories to store temporary and keeper outputs. 
 
-temp = root+"/wb_temp/"     
-keep = root+"/wb_layers/"   
+temps = root+"/temps/"     
+keeps = root+"/keeps/"   
 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Required datasets:
@@ -39,7 +39,7 @@ keep = root+"/wb_layers/"
 
 # Point to directory where you hold input data. 
 
-dem =root+"/ee/DEM_10m.tif"  
+dem =root+"/inputs/DEM_10m.tif"  
 
 # ------------------------------------------------------------------------------
 # IMPLEMENT
@@ -50,8 +50,8 @@ dem =root+"/ee/DEM_10m.tif"
 
 wbt.geomorphons(
     dem = dem, 
-    output = keep+"_landforms.tif", 
-    search=50,              # Adjust search distance based on site terrain and data resolution.
+    output = keeps+"_0101_landforms.tif", 
+    search=100,              # Adjust search distance based on site terrain and data resolution.
     threshold=0.0,          
     fdist=0,               
     forms=True      

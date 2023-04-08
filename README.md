@@ -1,29 +1,49 @@
-## VT Conservation Docs  
+## VT Conservation    
 
-A collection of geographic data workflows for teaching and doing conservation planning.   
+A collection of geographic data workflows for teaching and doing conservation planning using examples from Vermont, USA.   
 
 ### Data 
 
-The data called by the scripts can be accessed [here](https://drive.google.com/drive/folders/1H_9ShSYgT1qYIMOfpEarzISFqd3OnGSu?usp=sharing). 
+To access data called by the scripts:
 
-You will need to:  
+1. Create three directories in a root directory on a drive as shown below. The three directories should be named:
+    * inputs
+    * keeps
+    * temps
 
-1. Download the dataset.  
-2. Place it in a local folder.
-3. Update the script so that the input data variable points to your local path.
+![directory](assets/directory.png) 
 
-### Practice
+2. Download the required datasets from [here][data] and place them in the inputs folder.
 
-The practice workflows are python scripts that implement tools with [WhiteboxTools Open Core][01]. For technical documentation on the tools, please refer to the [WhiteboxTools manual][02].
+3. In the practice script, uppdate your root directory path so that it points to your root folder. For example:  
+
+```python
+root = "/Volumes/drosera/GEOG0310/s23"
+```
+
+### Practice workflows
+
+The practice workflows are python scripts that implement [WhiteboxTools Open Core][wb1]. For technical documentation, please refer to the [WhiteboxTools manual][wb2].
 
 | Script    | Description   |
 | :--       | :---          |
-| [_01_simple_landforms.py][11] | Classify landforms from a 10m DEM with geomorphons. | 
-| [_02_valley_bottoms.py][12]   | Resample a high resolution DEM, classify landforms with geomorphons, and threshold to isolate valley bottoms. | 
+| [_01_simple_landforms.py][01] | Classify landforms from a 10m DEM with geomorphons. | 
+| [_02_valley_bottoms.py][02]   | Classify landforms with geomorphons, threshold to isolate valley bottoms, smooth with neighborhood majority filter. | 
 
-[01]: https://www.whiteboxgeo.com/geospatial-software/
-[02]: https://www.whiteboxgeo.com/manual/wbt_book/available_tools/index.html
+### Contact 
 
-[11]: practice/_01_simple_landforms.py 
-[12]: practice/_02_valley_bottoms.py
+Jeff Howarth  
+Associate Professor of Geography  
+Middlebury College  
+
+
+[data]: https://drive.google.com/drive/folders/1H_9ShSYgT1qYIMOfpEarzISFqd3OnGSu?usp=sharing
+
+[wb1]: https://www.whiteboxgeo.com/geospatial-software/
+
+[wb2]: https://www.whiteboxgeo.com/manual/wbt_book/available_tools/index.html
+
+[01]: practice/_01_simple_landforms.py 
+[02]: practice/_02_valley_bottoms.py
+
 
