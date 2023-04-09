@@ -62,7 +62,7 @@ lc = root+"/inputs/LCHP_1m_midd.tif"
 
 
 
-# Buffer into recovering habitat to identify cores.  
+# Buffer 50 meters into recovering habitat to identify cores.  
 # Because images sometimes lose their crs information, it can be safer to specific distance in cell units. 
 
 
@@ -97,7 +97,7 @@ lc = root+"/inputs/LCHP_1m_midd.tif"
 # Replace background value with zero.
 
 
-# Threshold habitat blocks by percent tree canopy. 
+# Threshold habitat blocks by percent tree canopy (> 49%). 
 
 
 
