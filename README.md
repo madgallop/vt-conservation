@@ -2,14 +2,15 @@
 
 A collection of geographic data workflows for teaching and doing conservation planning using examples from Vermont, USA.   
 
-### Practice workflows
+### Practice  
 
-The practice workflows are python scripts that implement [WhiteboxTools Open Core][wb1]. For technical documentation, please refer to the [WhiteboxTools manual][wb2].
+The practice scripts outline workflows that you can implement with python and [WhiteboxTools Open Core][wb1]. The idea is that you learn by trying to fill in the blanks. For technical documentation on WhiteboxTools, please refer to the [WhiteboxTools manual][wb2]. To check your work, please refer to the solution for each problem.  
 
-| Script    | Description   |
-| :--       | :---          |
-| [_01_simple_landforms.py][01] | Classify landforms with geomorphons. | 
-| [_02_valley_bottoms.py][02]   | Classify landforms with geomorphons, threshold to isolate valley bottoms, smooth with neighborhood majority filter. | 
+| Practice    | Description   | Solution  |
+| :--       | :---          | :---:      |
+| [_01p_simple_landforms.py][01p] | Classify landforms with geomorphons. | [01][01s] |
+| [_02p_valley_bottoms.py][02p]   | Classify landforms with geomorphons, threshold to isolate valley bottoms, smooth with neighborhood majority filter. |  [02][02s]
+| [_03p_forest_habitat_blocks][03p] | Classify forest habitat blocks. | [03][03s]
 
 ### Data repository  
 
@@ -42,6 +43,8 @@ root = "/Volumes/drosera/GEOG0310/s23"
 
 In the above example, the root variable points to the s23 folder in GEOG0310 on an external hardrive named drosera. 
 
+### Solutions 
+
 ### Contact 
 
 Jeff Howarth  
@@ -55,7 +58,11 @@ Middlebury College
 
 [wb2]: https://www.whiteboxgeo.com/manual/wbt_book/available_tools/index.html
 
-[01]: practice/_01_simple_landforms.py 
-[02]: practice/_02_valley_bottoms.py
+[01p]: practice/_01p_simple_landforms.py 
+[01s]: solutions/_01s_simple_landforms.py
 
+[02p]: practice/_02p_valley_bottoms.py
+[02s]: solutions/_02s_valley_bottoms.py
 
+[03p]: practice/_03p_forest_habitat_blocks.py
+[03s]: solutions/_03s_forest_habitat_blocks.py
