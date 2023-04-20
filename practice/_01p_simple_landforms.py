@@ -7,10 +7,11 @@
 #  license:  Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# import tools from WBT module
+# # import tools from WBT module
 
 import sys
 sys.path.insert(1, '/Users/jhowarth/tools')     # path points to my WBT directory
+
 from WBT.whitebox_tools import WhiteboxTools
 
 # declare a name for the tools
@@ -28,10 +29,11 @@ wbt = WhiteboxTools()
 
 root = "/Volumes/drosera/GEOG0310/s23"
 
-# Set up separate directories to store temporary and keeper outputs. 
+# Set up variables to point to different input and storage directories. 
 
 temps = root+"/temps/"     
-keeps = root+"/keeps/"   
+keeps = root+"/keeps/" 
+starts = root+"/inputs/"  
 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Required datasets:
@@ -40,7 +42,7 @@ keeps = root+"/keeps/"
 # Point to directory where you hold input data. 
 # The 'midd' DEM is relatively small and good for testing. 
 
-dem =root+"/inputs/DEM_10m_midd.tif"  
+dem =starts+"DEM_10m_midd.tif"  
 
 # ------------------------------------------------------------------------------
 # IMPLEMENT

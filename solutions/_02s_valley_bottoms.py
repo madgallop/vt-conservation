@@ -144,10 +144,5 @@ wbt.set_nodata_value(
     back_value=0.0,
 )
 
-# Set background of blocks to no data. 
+# Set background of blocks to zero. 
 
-wbt.set_nodata_value(
-    i = keeps+"_0221_valleys_not_developed_clumps_bg_masked.tif", 
-    output = keeps+"_0222_valleys_not_developed_clumps_bg_0.tif", 
-    back_value=0.0, 
-)
