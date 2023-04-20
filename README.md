@@ -10,7 +10,9 @@ The practice scripts outline workflows that you can implement with python and [W
 | :--       | :---          | :---:      |
 | [_01p_simple_landforms.py][01p] | Classify landforms with geomorphons. | [01][01s] |
 | [_02p_valley_bottoms.py][02p]   | Classify landforms with geomorphons, threshold to isolate valley bottoms, smooth with neighborhood majority filter. |  [02][02s]
-| [_03p_forest_habitat_blocks][03p] | Classify forest habitat blocks. | [03][03s]
+| [_03p_forest_habitat_blocks.py][03p] | Classify forest habitat blocks. | [03][03s]
+| [_04p_select_valley_corridors.py][04p] | Align images, erase constraints, select by topological criteria. | [04][04s]
+
 
 ### Data repository  
 
@@ -87,3 +89,6 @@ Middlebury College
 
 [03p]: practice/_03p_forest_habitat_blocks.py
 [03s]: solutions/_03s_forest_habitat_blocks.py
+
+[04p]: practice/_04p_select_valley_corridors.py
+[04s]: solutions/_04s_select_valley_corridors.py

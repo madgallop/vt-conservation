@@ -3,7 +3,7 @@
 #  purpose:     Classify landforms with geomorphons and isolate valley bottoms.
 #
 #  author:      Jeff Howarth
-#  update:      04/07/2023
+#  update:      04/20/2023
 #  license:     Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -11,6 +11,7 @@
 
 import sys
 sys.path.insert(1, '/Users/jhowarth/tools')     # path points to my WBT directory
+
 from WBT.whitebox_tools import WhiteboxTools
 
 # declare a name for the tools
@@ -32,6 +33,7 @@ root = "/Volumes/drosera/GEOG0310/s23"
 
 temps = root+"/temps/"     
 keeps = root+"/keeps/"   
+starts = root+"/inputs/" 
 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Required datasets:
@@ -40,10 +42,15 @@ keeps = root+"/keeps/"
 # Point to directory where you hold input data. 
 # The 'midd' DEM is relatively small and good for testing. 
 
-dem =root+"/inputs/DEM_10m_midd.tif"  
+dem = starts+"DEM_10m_midd.tif"  
+lc = starts+"LCHP_1m_Midd.tif"
+
+# ==============================================================================
+# IMPLEMENT
+# ==============================================================================
 
 # ------------------------------------------------------------------------------
-# IMPLEMENT
+# Extract lowlands from DEM.
 # ------------------------------------------------------------------------------
 
 # Classify landforms from DEM with geomorphons. 
@@ -62,7 +69,7 @@ wbt.geomorphons(
  
 wbt.greater_than(
   input1 = temps+"_0201_landforms.tif", 
-  input2 = 9,
+  input2 = 7,
   output = temps+"_0202_valley_bottoms.tif",
   incl_equals=True
 )
@@ -71,7 +78,76 @@ wbt.greater_than(
 
 wbt.majority_filter(
     i = temps+"_0202_valley_bottoms.tif", 
-    output = keeps+"_0203_valley_bottoms_smoothed.tif",
+    output = temps+"_0203_valley_bottoms_smoothed.tif",
     filterx=5,
     filtery=5
   )
+
+# Clump valley bottoms into distinct objects. 
+
+wbt.clump(
+    i = temps+"_0203_valley_bottoms_smoothed.tif", 
+    output = keeps+"_0204_valley_bottoms_smoothed_objects.tif", 
+    diag=True, 
+    zero_back=True
+)
+
+# ------------------------------------------------------------------------------
+# Remove developed land cover from valley bottoms. 
+# ------------------------------------------------------------------------------
+
+# Resample lc to match valley cell size. 
+
+wbt.resample(
+    inputs = lc, 
+    output = temps+"_0211_resample_lc.tif", 
+    cell_size = None, 
+    base = dem, 
+    method = "nn"
+)
+
+# Reclassify lc to make developed land eraser.
+
+wbt.reclass(
+    i = temps+"_0211_resample_lc.tif", 
+    output = temps+"_0212_dev_eraser.tif", 
+    reclass_vals = "1;1;1;2;1;3;1;4;0;5;0;6;0;7;0;8;0;9;0;10", 
+    assign_mode=True
+)
+
+# Erase developed land from valley bottoms.  
+
+wbt.multiply(
+    input1 = temps+"_0212_dev_eraser.tif", 
+    input2 = keeps+"_0204_valley_bottoms_smoothed_objects.tif", 
+    output = temps+"_0213_valleys_not_developed.tif", 
+)
+
+# Re-clump undeveloped lowlands to identify individual objects. 
+
+wbt.clump(
+    i = temps+"_0213_valleys_not_developed.tif", 
+    output = temps+"_0214_valleys_not_developed_clumps.tif", 
+    diag=True, 
+    zero_back=True
+)
+
+# ------------------------------------------------------------------------------
+# Make copies of output with background masked and background 0.
+# ------------------------------------------------------------------------------
+
+# Mask background.
+
+wbt.set_nodata_value(
+    i = temps+"_0214_valleys_not_developed_clumps.tif", 
+    output = keeps+"_0221_valleys_not_developed_clumps_bg_masked.tif", 
+    back_value=0.0,
+)
+
+# Set background of blocks to no data. 
+
+wbt.set_nodata_value(
+    i = keeps+"_0221_valleys_not_developed_clumps_bg_masked.tif", 
+    output = keeps+"_0222_valleys_not_developed_clumps_bg_0.tif", 
+    back_value=0.0, 
+)

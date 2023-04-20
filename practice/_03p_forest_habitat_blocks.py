@@ -3,7 +3,7 @@
 #  purpose:     Classify forest habitat blocks from land cover.
 #
 #  author:      Jeff Howarth
-#  update:      04/08/2023
+#  update:      04/20/2023
 #  license:     Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -57,9 +57,7 @@ lc = root+"/inputs/LCHP_1m_midd.tif"
 # Make a binary where recovering habitat = 0 and not recovering habitat = 1.
 
 
-
 # Pass a majority filter over the binary to remove noise from random pixels.  
-
 
 
 # Buffer 50 meters into recovering habitat to identify cores.  
@@ -73,6 +71,7 @@ lc = root+"/inputs/LCHP_1m_midd.tif"
 
 # Identify clumps of core recovering habitat. 
  
+
 
 # ------------------------------------------------------------------------------
 # 2. Identify recovering clumps with a majority of tree canopy. 
@@ -89,12 +88,12 @@ lc = root+"/inputs/LCHP_1m_midd.tif"
 # Count the number of tree canopy pixels in each clump.  
 
 
-
 # Divide the count of tree canopy by the pixel area of each clump. 
 
 
 
 # Replace background value with zero.
+
 
 
 # Threshold habitat blocks by percent tree canopy (> 49%). 
@@ -110,7 +109,6 @@ lc = root+"/inputs/LCHP_1m_midd.tif"
 
 
 # Set background as no data. 
-
 
 
 
@@ -130,15 +128,15 @@ lc = root+"/inputs/LCHP_1m_midd.tif"
 
 
 
-# Identify individual forested habitat blocks. 
 
+# Identify individual forested habitat blocks. 
 
 
 # ------------------------------------------------------------------------------
 # 5. Classify forested habitat blocks by area. 
 # ------------------------------------------------------------------------------
 
-# Set background as no data. 
+# Mask background. 
 
 
 
@@ -147,4 +145,24 @@ lc = root+"/inputs/LCHP_1m_midd.tif"
 
 
 # Convert square meters to acres.
+
+
+
+# ------------------------------------------------------------------------------
+# 6. Apply area criterion on forest blocks. 
+# ------------------------------------------------------------------------------
+
+# Select forest blocks that are greater than 20 acres. 
+
+
+
+# Mask background 
+
+
+
+# Replace background value with zero.
+
+
+# Re-clump blocks.
+
 

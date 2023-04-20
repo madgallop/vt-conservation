@@ -49,3 +49,14 @@ dem =root+"/inputs/DEM_10m_midd.tif"
 # Classify landforms from DEM with geomorphons. 
 # See WBT manual for parameter definitions. 
 
+wbt.geomorphons(
+    dem = dem, 
+    output = keeps+"_0101_landforms.tif", 
+    search=100, 
+    threshold=0.0, 
+    fdist=0, 
+    # skip=0, 
+    forms=True, 
+    # residuals=False, 
+    # callback=default_callback
+)
