@@ -97,5 +97,5 @@ lc = starts+"LCHP_1m_Midd.tif"
 
 
 
-# Set background of blocks to no data. 
+# Convert background to zero. 
 
