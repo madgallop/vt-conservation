@@ -10,7 +10,7 @@
 # import tools from WBT module
 
 import sys
-sys.path.insert(1, '/Users/madeleinegallop/Documents/ConnPlanning/wbt_starter')     # path points to my WBT directory
+sys.path.insert(1, '/Users/jhowarth/tools')     # path points to my WBT directory
 from WBT.whitebox_tools import WhiteboxTools
 
 # declare a name for the tools
@@ -26,7 +26,7 @@ wbt = WhiteboxTools()
 # For example, my root points to the directory (folder) of s23 in GEOG0310 
 # on an external drive named drosera. 
 
-root = "/Users/madeleinegallop/Documents/ConnPlanning"
+root = "/Volumes/drosera/GEOG0310/s23"
 
 # Set up separate directories to store temporary and keeper outputs. 
 
@@ -49,12 +49,11 @@ dem =root+"/inputs/DEM_10m_midd.tif"
 # Classify landforms from DEM with geomorphons. 
 # See WBT manual for parameter definitions. 
 
-
 wbt.geomorphons(
     dem = dem, 
     output = keeps+"_0101_landforms.tif", 
-    search=100, 
-    threshold=0.0, 
-    fdist=0, 
-    skip=0, 
-    forms=True)
+    search=100,              # Adjust search distance based on site terrain and data resolution.
+    threshold=0.0,          
+    fdist=0,               
+    forms=True      
+    )
