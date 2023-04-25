@@ -32,6 +32,7 @@ root = "/Volumes/drosera/GEOG0310/s23"
 
 temps = root+"/temps/"     
 keeps = root+"/keeps/"   
+starts = root+"/inputs/" 
 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Required datasets:
@@ -40,7 +41,7 @@ keeps = root+"/keeps/"
 # Point to directory where you hold input data. 
 # The 'midd' DEM is relatively small and good for testing. 
 
-dem =root+"/inputs/DEM_10m_midd.tif"  
+dem = starts+"DEM_10m_midd.tif"  
 
 # ------------------------------------------------------------------------------
 # IMPLEMENT

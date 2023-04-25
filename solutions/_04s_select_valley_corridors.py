@@ -49,8 +49,11 @@ starts = root+"/inputs/"
 
 # Point to directory where you hold input data. 
 
-valleys = keeps+"_0204_valley_bottoms_smoothed_objects.tif"  
-blocks = temps+"_0343_forested_habitat_blocks.tif"
+# valleys = keeps+"_0204_valley_bottoms_smoothed_objects.tif"  
+# blocks = temps+"_0343_forested_habitat_blocks.tif"
+
+valleys = keeps+"_0214_valleys_not_developed_clumps.tif"  
+blocks = keeps+"_0356_forested_habitat_blocks_gte_XX_acres_objects.tif"
 
 # ==============================================================================
 # WORKFLOW
@@ -69,7 +72,6 @@ wbt.resample(
     base = valleys, 
     method = "nn"
 )
-
 
 # ------------------------------------------------------------------------------
 # Erase valleys where they overlap blocks. 
@@ -201,7 +203,7 @@ wbt.convert_nodata_to_zero(
 wbt.zonal_statistics(
     i = temps+"_0425_valley_corridors_test_bg_0.tif", 
     features = temps+"_0414_valleys_not_blocks_clumps_extra_edge.tif", 
-    output=keeps+"_0426_valley_corridors.tif", 
+    output=keeps+"_0426_valley_corridors_not_developed_blocks_gte_XX_acres.tif", 
     stat="max", 
     out_table=None
 )

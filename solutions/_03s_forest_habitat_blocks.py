@@ -213,7 +213,6 @@ wbt.Or(
     output = temps+"_0342_union.tif", 
 )
 
-
 # Identify individual forested habitat blocks. 
 
 wbt.clump(
@@ -257,35 +256,35 @@ wbt.divide(
 # 6. Apply area criterion on forest blocks. 
 # ------------------------------------------------------------------------------
 
-# Select forest blocks that are greater than 20 acres. 
+# Select forest blocks that are greater than 100 acres. 
 
 wbt.greater_than(
     input1 = keeps+"_0353_forested_habitat_blocks_acres.tif", 
-    input2 = 20.0, 
-    output = temps+"_0354_forested_habitat_blocks_gte_20_acres.tif", 
+    input2 = 100.0, 
+    output = temps+"_0354_forested_habitat_blocks_gte_XX_acres.tif", 
     incl_equals=True
 )
 
-# Mask background 
+# Mask background (erase blocks that did not meet area criterion).
 
 wbt.set_nodata_value(
-    i = temps+"_0354_forested_habitat_blocks_gte_20_acres.tif", 
-    output = keeps+"_0355_forested_habitat_blocks_gte_20_acres_bg_masked.tif", 
+    i = temps+"_0354_forested_habitat_blocks_gte_XX_acres.tif", 
+    output = temps+"_0355_forested_habitat_blocks_gte_XX_acres_bg_masked.tif", 
     back_value=0.0, 
 )
 
 # Replace background value with zero.
 
 wbt.convert_nodata_to_zero(
-    i = keeps+"_0355_forested_habitat_blocks_gte_20_acres_bg_masked.tif", 
-    output = temps+"_0356_forested_habitat_blocks_gte_20_acres_bg_0.tif", 
+    i = temps+"_0355_forested_habitat_blocks_gte_XX_acres_bg_masked.tif", 
+    output = temps+"_0356_forested_habitat_blocks_gte_XX_acres_bg_0.tif", 
 )
 
 # Re-clump blocks.
 
 wbt.clump(
-    i = temps+"_0356_forested_habitat_blocks_gte_20_acres_bg_0.tif", 
-    output = keeps+"_0356_forested_habitat_blocks_gte_20_acres_objects.tif", 
+    i = temps+"_0356_forested_habitat_blocks_gte_XX_acres_bg_0.tif", 
+    output = keeps+"_0356_forested_habitat_blocks_gte_XX_acres_objects.tif", 
     diag=True, 
     zero_back=True, 
 )

@@ -43,32 +43,21 @@ starts = root+"/inputs/"
 # The 'midd' DEM is relatively small and good for testing. 
 
 dem = starts+"DEM_10m_midd.tif"  
+lf = keeps+"_0101_landforms.tif"
 lc = starts+"LCHP_1m_Midd.tif"
 
 # ==============================================================================
-# IMPLEMENT
+# WORKFLOW
 # ==============================================================================
 
 # ------------------------------------------------------------------------------
 # Extract lowlands from DEM.
 # ------------------------------------------------------------------------------
 
-# Classify landforms from DEM with geomorphons. 
-# See WBT manual for parameter definitions.
-
-wbt.geomorphons(
-    dem = dem, 
-    output = temps+"_0201_landforms.tif", 
-    search=100,              # Adjust search distance based on site terrain and data resolution.
-    threshold=0.0,          
-    fdist=0,               
-    forms=True      
-    )
-
 # Threshold landform class to isolate valley bottoms. 
  
 wbt.greater_than(
-  input1 = temps+"_0201_landforms.tif", 
+  input1 = lf, 
   input2 = 7,
   output = temps+"_0202_valley_bottoms.tif",
   incl_equals=True
@@ -127,22 +116,15 @@ wbt.multiply(
 
 wbt.clump(
     i = temps+"_0213_valleys_not_developed.tif", 
-    output = temps+"_0214_valleys_not_developed_clumps.tif", 
+    output = keeps+"_0214_valleys_not_developed_clumps.tif", 
     diag=True, 
     zero_back=True
 )
 
-# ------------------------------------------------------------------------------
-# Make copies of output with background masked and background 0.
-# ------------------------------------------------------------------------------
-
 # Mask background.
 
 wbt.set_nodata_value(
-    i = temps+"_0214_valleys_not_developed_clumps.tif", 
-    output = keeps+"_0221_valleys_not_developed_clumps_bg_masked.tif", 
+    i = keeps+"_0214_valleys_not_developed_clumps.tif", 
+    output = keeps+"_0215_valleys_not_developed_clumps_bg_masked.tif", 
     back_value=0.0,
 )
-
-# Set background of blocks to zero. 
-
