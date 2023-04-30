@@ -3,7 +3,7 @@
 #  purpose:     Classify forest habitat blocks from land cover.
 #
 #  author:      Jeff Howarth
-#  update:      04/08/2023
+#  update:      04/20/2023
 #  license:     Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -213,7 +213,6 @@ wbt.Or(
     output = temps+"_0342_union.tif", 
 )
 
-
 # Identify individual forested habitat blocks. 
 
 wbt.clump(
@@ -227,7 +226,7 @@ wbt.clump(
 # 5. Classify forested habitat blocks by area. 
 # ------------------------------------------------------------------------------
 
-# Set background as no data. 
+# Mask background. 
 
 wbt.set_nodata_value(
     i = temps+"_0343_forested_habitat_blocks.tif", 
@@ -251,4 +250,41 @@ wbt.divide(
     input1 = temps+"_0352_forested_habitat_blocks_area.tif", 
     input2 = 4046.86, 
     output = keeps+"_0353_forested_habitat_blocks_acres.tif",
+)
+
+# ------------------------------------------------------------------------------
+# 6. Apply area criterion on forest blocks. 
+# ------------------------------------------------------------------------------
+
+# Select forest blocks that are greater than 100 acres. 
+
+wbt.greater_than(
+    input1 = keeps+"_0353_forested_habitat_blocks_acres.tif", 
+    input2 = 100.0, 
+    output = temps+"_0354_forested_habitat_blocks_gte_XX_acres.tif", 
+    incl_equals=True
+)
+
+# Mask background (erase blocks that did not meet area criterion).
+
+wbt.set_nodata_value(
+    i = temps+"_0354_forested_habitat_blocks_gte_XX_acres.tif", 
+    output = temps+"_0355_forested_habitat_blocks_gte_XX_acres_bg_masked.tif", 
+    back_value=0.0, 
+)
+
+# Replace background value with zero.
+
+wbt.convert_nodata_to_zero(
+    i = temps+"_0355_forested_habitat_blocks_gte_XX_acres_bg_masked.tif", 
+    output = temps+"_0356_forested_habitat_blocks_gte_XX_acres_bg_0.tif", 
+)
+
+# Re-clump blocks.
+
+wbt.clump(
+    i = temps+"_0356_forested_habitat_blocks_gte_XX_acres_bg_0.tif", 
+    output = keeps+"_0356_forested_habitat_blocks_gte_XX_acres_objects.tif", 
+    diag=True, 
+    zero_back=True, 
 )

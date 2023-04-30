@@ -7,10 +7,11 @@
 #  license:  Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# import tools from WBT module
+# # import tools from WBT module
 
 import sys
-sys.path.insert(1, '/Users/madeleinegallop/Documents/ConnPlanning/wbt_starter')     # path points to my WBT directory
+sys.path.insert(1, '/Users/jhowarth/tools')     # path points to my WBT directory
+
 from WBT.whitebox_tools import WhiteboxTools
 
 # declare a name for the tools
@@ -26,12 +27,13 @@ wbt = WhiteboxTools()
 # For example, my root points to the directory (folder) of s23 in GEOG0310 
 # on an external drive named drosera. 
 
-root = "/Users/madeleinegallop/Documents/ConnPlanning"
+root = "/Volumes/drosera/GEOG0310/s23"
 
-# Set up separate directories to store temporary and keeper outputs. 
+# Set up variables to point to different input and storage directories. 
 
 temps = root+"/temps/"     
-keeps = root+"/keeps/"   
+keeps = root+"/keeps/" 
+starts = root+"/inputs/"  
 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Required datasets:
@@ -40,7 +42,7 @@ keeps = root+"/keeps/"
 # Point to directory where you hold input data. 
 # The 'midd' DEM is relatively small and good for testing. 
 
-dem =root+"/inputs/DEM_10m_midd.tif"  
+dem =starts+"DEM_10m_midd.tif"  
 
 # ------------------------------------------------------------------------------
 # IMPLEMENT
@@ -49,12 +51,14 @@ dem =root+"/inputs/DEM_10m_midd.tif"
 # Classify landforms from DEM with geomorphons. 
 # See WBT manual for parameter definitions. 
 
-
 wbt.geomorphons(
     dem = dem, 
     output = keeps+"_0101_landforms.tif", 
     search=100, 
     threshold=0.0, 
     fdist=0, 
-    skip=0, 
-    forms=True)
+    # skip=0, 
+    forms=True, 
+    # residuals=False, 
+    # callback=default_callback
+)

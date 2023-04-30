@@ -1,25 +1,33 @@
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#  name:        _02_valley_bottoms.py
-#  purpose:     Classify landforms with geomorphons and isolate valley bottoms.
+#  name:        _04_select_valley_corridors.py
+#  purpose:     Identify valley corridors that connect two or more blocks.
 #
 #  author:      Jeff Howarth
-#  update:      04/20/2023
+#  update:      04/18/2023
 #  license:     Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# import tools from WBT module
+#  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#  Access Whitebox tools. 
+#  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# Point to directory with WBT module.
+# Please note: if you have stored this script in the same directory as the WBT folder, 
+# then you can comment out lines 14-15.
 
 import sys
 sys.path.insert(1, '/Users/jhowarth/tools')     # path points to my WBT directory
 
+# Import tools from WBT module. 
+
 from WBT.whitebox_tools import WhiteboxTools
 
-# declare a name for the tools
+# Declare a name for the tools.
 
 wbt = WhiteboxTools()
 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#  Working directories
+#  Define working directories to manage outputs. 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # Define personal storage root.
@@ -32,70 +40,94 @@ root = "/Volumes/drosera/GEOG0310/s23"
 # Set up separate directories to store temporary and keeper outputs. 
 
 temps = root+"/temps/"     
-keeps = root+"/keeps/"   
-starts = root+"/inputs/" 
+keeps = root+"/keeps/" 
+starts = root+"/inputs/"  
 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-#  Required datasets:
+#  Define the starting input data. 
 #  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # Point to directory where you hold input data. 
-# The 'midd' DEM is relatively small and good for testing. 
 
-dem = starts+"DEM_10m_midd.tif"  
-lc = starts+"LCHP_1m_Midd.tif"
+valleys = keeps+"_0204_valley_bottoms_smoothed_objects.tif"  
+blocks = temps+"_0343_forested_habitat_blocks.tif"
 
 # ==============================================================================
-# IMPLEMENT
+# WORKFLOW
 # ==============================================================================
 
 # ------------------------------------------------------------------------------
-# Extract lowlands from DEM.
+# Align images: must be same extent and cell size. 
 # ------------------------------------------------------------------------------
 
-# Classify landforms from DEM with geomorphons. 
-# See WBT manual for parameter definitions.
+# Resample blocks to match valley cell size. 
 
-
-# Threshold landform class to isolate valley bottoms. 
- 
-
-
-# Remove noise by taking majority class within neighborhood kernel filter.
-
-
-
-# Clump valley bottoms into distinct objects. 
 
 
 
 # ------------------------------------------------------------------------------
-# Remove developed land cover from valley bottoms. 
+# Erase valleys where they overlap blocks. 
 # ------------------------------------------------------------------------------
 
-# Resample lc to match valley cell size. 
+# Convert blocks into an inverse binary. 
 
 
 
-# Reclassify lc to make developed land eraser.
+# Erase blocks from valley bottoms.  
 
 
 
-# Erase developed land from valley bottoms.  
-
-
-
-# Re-clump undeveloped lowlands to identify individual objects. 
+# Re-clump valley bottoms to identify individual objects. 
 
 
 
 # ------------------------------------------------------------------------------
-# Make copies of output with background masked and background 0.
+# Identify and remove islands. 
 # ------------------------------------------------------------------------------
+
+# Grow valley bottom edge by one pixel.
+
+
 
 # Mask background.
 
 
 
-# Convert background to zero. 
+# Test for overlap between valley bottoms and habitat blocks.
+
+
+
+# Mask islands.  
+
+
+
+# Re-clump valley bottoms without islands to identify individual objects. 
+
+
+
+# ------------------------------------------------------------------------------
+# Select corridors. 
+# ------------------------------------------------------------------------------
+
+# Set background of blocks to no data. 
+
+
+
+# Test for min of overlap.
+
+
+
+# Test for max of overlap.
+
+
+
+# Bridges (tombolos) will have unequal min and max values, 
+# while piers (spits) will have equal min and max values. 
+
+
+# Unmask background values. 
+
+
+
+# Select valley bottom corridors. 
 
